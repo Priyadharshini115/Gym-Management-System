@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gym Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🏋️ Gym Management Dashboard</h1>
+  </header>
+
+  <section id="member-form">
+    <h2>Add Member</h2>
+    <input type="text" id="memberName" placeholder="Name">
+    <input type="text" id="memberEmail" placeholder="Email">
+    <button onclick="addMember()">Add</button>
+  </section>
+
+  <section id="member-list">
+    <h2>Members</h2>
+    <ul id="members"></ul>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f4f4f4;
+}
+
+header {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+section {
+  margin-top: 20px;
+  background: white;
+  padding: 15px;
+  border-radius: 5px;
+}
+let members = JSON.parse(localStorage.getItem("members")) || [];
+
+function addMember() {
+  const name = document.getElementById("memberName").value;
+  const email = document.getElementById("memberEmail").value;
+
+  if (name && email) {
+    members.push({ name, email });
+    localStorage.setItem("members", JSON.stringify(members));
+    displayMembers();
+  }
+}
+
+function displayMembers() {
+  const list = document.getElementById("members");
+  list.innerHTML = "";
+  members.forEach((member, index) => {
+    list.innerHTML += `<li>${member.name} (${member.email})</li>`;
+  });
+}
+
+window.onload = displayMembers;
